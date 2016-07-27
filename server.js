@@ -34,6 +34,7 @@ app.get('/', function(request, response){
   response.sendFile(path.resolve(__dirname, 'public/views/login.html'));
 })
 
+
 passport.use('local', new localStrategy({
       passReqToCallback : true,
       usernameField: 'username'
@@ -64,19 +65,6 @@ passport.use('local', new localStrategy({
   })
 );
 
-// Mongo setup
-var mongoURI = "mongodb://localhost:27017/prime_example_passport";
-var MongoDB = mongoose.connect(mongoURI).connection;
-
-MongoDB.on('error', function (err) {
-   console.log('mongodb connection error', err);
-});
-
-MongoDB.once('open', function () {
- console.log('mongodb connection open');
-});
-
-
 passport.serializeUser(function(user, done){
   done(null, user.id);
 });
@@ -89,6 +77,19 @@ passport.deserializeUser(function(id, done) {
     done(null,user);
   });
 });
+
+// Mongo setup
+var mongoURI = "mongodb://localhost:27017/prime_example_passport";
+var MongoDB = mongoose.connect(mongoURI).connection;
+
+MongoDB.on('error', function (err) {
+   console.log('mongodb connection error', err);
+});
+
+MongoDB.once('open', function () {
+ console.log('mongodb connection open');
+});
+
 
 
 
